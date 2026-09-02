@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3001
 
 server.use(express.json())
 server.use(cors({
-    origin: 'http://localhost:5174',
+    origin: process.env.FRONT_URL,
     credentials: true
 })) //Le cors doit aller avant les use pour communiquer
 server.use(cookieParser())

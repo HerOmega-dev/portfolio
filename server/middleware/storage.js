@@ -1,5 +1,4 @@
 import multer from "multer";
-import path from 'path'
 
 //1. Configuration du moteur de stockage de Multer
 //Définition d'où et comment les fichiers téléchargés sont enregistrés.
