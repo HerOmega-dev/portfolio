@@ -21,6 +21,7 @@ server.use(cors({
     credentials: true
 })) //Le cors doit aller avant les use pour communiquer
 server.use(cookieParser())
+server.use('/uploads', express.static('uploads'))
 server.use('', authRoute)
 
 mongoose.connect(process.env.MONGO_URI)

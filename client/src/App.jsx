@@ -8,6 +8,8 @@ import Home from './pages/Home'
 import CV from './pages/CV'
 import Contact from './pages/Contact'
 import Register from './pages/Register'
+import VerifyEmail from './pages/VerifyEmail'
+import Login from './pages/Login'
 
 function App() {
 
@@ -18,9 +20,12 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>} />
+          <Route path='/register' element={<Register/>} />
+          <Route path='/verify-email' element={<VerifyEmail/>} />
+          <Route path='/login' element={<Login/>} />
+          {/* <Route path='/logout' element={<Logout/>} /> */}
           <Route path='/cv' element={<CV/>} />
           <Route path='/contact' element={<Contact/>} />
-          <Route path='/register' element={<Register/>} />
         </Routes>
       </BrowserRouter>
     </>

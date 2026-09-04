@@ -9,7 +9,11 @@ import sendConfirmationEmail from '../middleware/sendConfirmationEmail.js';
 
 const router = express.Router()
 
+// ==========================================
+// 1. ROUTE : REGISTER
+// ==========================================
 router.post('/register', upload.single('profilePicture'), async(req,res) => {
+    console.log("Register body :", req.body)
     try {
         //Extraction des données du formulaire register en front
         const {firstName, lastName, userName, email, password, role} = req.body
@@ -23,24 +27,29 @@ router.post('/register', upload.single('profilePicture'), async(req,res) => {
 
         //Récupération des fichiers téléchargé et des noms générés par Multer
         const imageFile = req.file
+        console.log("const imageFile", req.file)
         const fileName = imageFile ? imageFile.filename : null
 
         //Génération d'un token nique est aléatoire de 32 octets converti en hexa, utilisé pour la vérification du mail
         const token = crypto.randomBytes(32).toString('hex')
 
-        await User.create({firstName, lastName, userName, email, password:hash, profilePicture:fileName, token})
+        await User.create({firstName, lastName, userName, email, password:hash, profilePicture:fileName, role, token})
 
         //URL de vérification avec token
-        const url = `http://localhost:5173/verify-email?token=${token}`
+        const url = `${process.env.FRONT_URL}/verify-email?token=${token}`
         sendConfirmationEmail(email, url)
 
         res.status(201).json({message:'Utilisateur crée'})
         
     } catch (err) {
+        // console.error('Register error :', err)
         return res.status(500).json({message: err.message})
     }
 })
 
+// ==========================================
+// 2. ROUTE : VERIFIER L'EMAIL
+// ==========================================
 router.get('/verify-email', async(req, res) => {
     try {
         //Récupération du token depuis l'URL
@@ -59,6 +68,9 @@ router.get('/verify-email', async(req, res) => {
     }
 })
 
+// ==========================================
+// 3. ROUTE : LOGIN
+// ==========================================
 router.post('/login', async(req, res) => {
     try {
         const {email, password} = req.body
@@ -66,7 +78,7 @@ router.post('/login', async(req, res) => {
             return res.status(400).json({message: "Veuillez remplir tous les champs"})
         }
 
-        const user = await user.findOne({email})
+        const user = await User.findOne({email})
         if (!user) {
             return res.status(400).json({message: "Identifiants invalides"})
         }
@@ -91,12 +103,32 @@ router.post('/login', async(req, res) => {
         //Création et configuration du cookie sécurisé
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            // secure: process.env.NODE_ENV === 'production',
             maxAge: 3600 * 1000 * 2,
             sameSite: 'lax'
         })
+
+        return res.status(200).json({message: "Connection réussie"})
     } catch (err) {
-         
+         return res.status(500).json({message: err.message})
+    }
+})
+
+// ==========================================
+// 4. ROUTE : LOGOUT
+// ==========================================
+router.post('/logout', (req, res) => {
+    try {
+        res.cookie('token', '', {
+            httpOnly: true,
+            expires: new Date(0),
+            // secure : process.env.NODE_ENV === 'production',
+            sameSite: 'lax'
+        })
+
+        return res.status(200).json({message: "Vous etes déconnecté"})
+    } catch {
+        return res.status(400).json({message: err.message})
     }
 })
 

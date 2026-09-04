@@ -1,6 +1,6 @@
 import express from "express";
-import Profile from "../models/profile.model.js";
-verifyToken
+import User from "../models/user.model.js";
+import verifyToken from "../middleware/verifyToken.js";
 
 const router = express.Router()
 
@@ -12,12 +12,12 @@ router.get('/admin', verifyToken, async (req,res) => {
     try {
         //1. Middleware verifyToken OK
         //2. Vérification par role
-        if (req.profile.role !== 'admin') {
+        if (req.user.role !== 'admin') {
             return res.status(403).json({message: 'Acces refusé'})
         }
 
-        const profile = await Profile.find()
-        return res.status(200).json(profile)
+        const user = await User.find()
+        return res.status(200).json(user)
     } catch (err) {
         return res.status(500).json({message: err.message})
     }

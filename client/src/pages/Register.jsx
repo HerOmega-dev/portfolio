@@ -16,13 +16,13 @@ export default function Register() {
     e.preventDefault()
     try {
       const formData = new FormData()
-      fromData.append('firstName', firstName)
-      fromData.append('lastName', lastName)
-      fromData.append('userName', userName)
-      fromData.append('email', email)
-      fromData.append('password', password)
-      fromData.append('profilePicture', profilePicture)
-      fromData.append('role', role)
+      formData.append('firstName', firstName)
+      formData.append('lastName', lastName)
+      formData.append('userName', userName)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('profilePicture', profilePicture)
+      formData.append('role', role)
 
       const response = await fetch (`${import.meta.env.VITE_BACK_URL}/register`, {
         method: 'POST',
@@ -52,7 +52,7 @@ export default function Register() {
           <Input type="text" placeholder='Pseudo' onChange={(e) => setUserName(e.target.value)}/>
           <Input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required/>
           <Input type="password" placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} required className={'col-span-2'}/>
-          <Input type="file" accept='image/*' onChange={(e) => setProfilePicture(e.target.value)}/>
+          <Input type="file" name="profilePicture" accept='image/*' onChange={(e) => setProfilePicture(e.target.files[0])}/>
           <select name="role" id="role" onChange={(e) => setRole(e.target.value)} required>
             <option defaultValue={"choisir un rôle"}>Choisir un rôle</option>
             <option value="user">Utilisateur</option>
