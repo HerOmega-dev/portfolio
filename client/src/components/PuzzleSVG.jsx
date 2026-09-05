@@ -1,11 +1,47 @@
-import React from 'react'
+import { PuzzleRelPath, PuzzleAbsPath } from "../assets/PuzzlePath"
+import { cn } from "../lib/utils"
+import { cva } from "class-variance-authority"
 
-export default function PuzzleSVG() {
+const puzzleVariants = cva(
+  "absolute pointer-event-none",
+  {
+    variants: {
+      variant: {
+        purple: "text-purple",
+        blue: "text-blue",
+        pink: "text-pink"
+      },
+
+      size: {
+        md: "w-100 h-100"
+      }
+    }
+  }
+)
+
+export function PuzzleSVG({className, variant, size}) {
   return (
-    <svg width="75" height="75" viewBox="0 0 75 75" className='absolute w-0 h-0 overflow-hidden' aria-hidden="true">
+    <svg
+      viewBox="0 0 75 75"
+      className={cn(puzzleVariants({variant, size}), className)}>
+          <path 
+            d={PuzzleAbsPath}
+            className="fill-current"
+          />
+    </svg>
+  )
+}
+
+export function PuzzleClipPath() {
+  return (
+    <svg
+      //Pas besoin de viewbox car la taille n'importe pas, on veut seulement définir la géométrie. Idem pour les variantes, ce sera déterminé sur le conteneur parent.
+      className= "absolute w-0 h-0 aria-hidden">
       <defs>
-        <clipPath id='puzzle-svg' clipPathUnits="objectBoundingBox">
-          <path d="M0.358965 0.800299C0.265187 0.807572 0.06985 0.825287 0.038738 0.837956C0.024349 0.762523 -0.003354 0.592927 0.000943 0.518009C0.002564 0.515577 0.009094 0.512173 0.022245 0.518009C0.033563 0.526849 0.063357 0.544597 0.091986 0.544863C0.127773 0.545195 0.200085 0.515688 0.19928 0.4376C0.198476 0.359512 0.126473 0.331328 0.091986 0.331328C0.057499 0.331328 0.033996 0.346911 0.022245 0.357384C0.019179 0.359769 0.00765 0.370393 0.001296 0.357384C-0.005962 0.342523 0.018727 0.088215 0.03886 0.038199C0.114903 0.02377 0.285475 -0.003974 0.359417 0.000478C0.362096 0.00192 0.365847 0.007835 0.359417 0.019953C0.35138 0.0351 0.331596 0.068176 0.331596 0.091979C0.331596 0.115782 0.353852 0.198317 0.439171 0.198009C0.524489 0.1977 0.545511 0.125674 0.546128 0.091979C0.546747 0.058284 0.530672 0.032318 0.518925 0.019953C0.513567 0.015625 0.506065 0.005671 0.518925 0.000478C0.604037 0.008103 0.787184 0.026259 0.838871 0.037882C0.825989 0.128971 0.800415 0.320608 0.801157 0.358445C0.801231 0.362188 0.809348 0.370753 0.821305 0.358445C0.831179 0.349171 0.859149 0.330747 0.89204 0.331241C0.933153 0.33186 0.998688 0.361227 0.998688 0.438199C0.998688 0.515171 0.932227 0.545156 0.89204 0.544539C0.851853 0.54392 0.831585 0.527441 0.821305 0.517599C0.816512 0.510856 0.804009 0.504376 0.801403 0.517599C0.801239 0.594395 0.808456 0.765923 0.838628 0.837671C0.748843 0.824604 0.559116 0.798836 0.518489 0.800299C0.514728 0.802461 0.509461 0.809221 0.518489 0.818961C0.527597 0.826387 0.545871 0.851272 0.546108 0.891424C0.546405 0.941612 0.50572 0.998037 0.4389 0.998631C0.372081 0.999225 0.331693 0.937752 0.331693 0.891424C0.331693 0.854361 0.349875 0.828723 0.358965 0.820535C0.364309 0.815723 0.369665 0.801537 0.358965 0.800299Z" fill="#8B29FC" transform="rotate(165 0.5 0.5)"/>
+        <clipPath id='puzzle-clipPath' clipPathUnits="objectBoundingBox">
+          <path 
+            d={PuzzleRelPath}
+          />
         </clipPath>
       </defs>
     </svg>

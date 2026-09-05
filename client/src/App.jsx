@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import PuzzleSVG from './components/PuzzleSVG'
+import { PuzzleClipPath } from './components/PuzzleSVG'
 import Navbar from './components/Navbar'
 
 import Home from './pages/Home'
@@ -15,7 +15,8 @@ function App() {
 
   return (
     <>
-      <PuzzleSVG />
+      {/* PuzzleClipPath sert à déclarer une définition SVG qui sera référencée par clipPath. Il ne sert pas à afficher une pièce mais à mettre les Link de la Navbar en forme de pièce. La couleur ou la taille n'importe pas, il n'y a que la géométrie qui compte */}
+      <PuzzleClipPath /> 
       <BrowserRouter>
       <Navbar/>
         <Routes>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Canvas from './Canvas'
 
 export default function Transition({sectionA, sectionB}) {

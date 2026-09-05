@@ -1,7 +1,12 @@
-import React from 'react'
+import { PuzzleSVG } from "../components/PuzzleSVG"
 
 export default function Contact() {
   return (
-    <div>Contact</div>
+    <main className='h-screen'>
+      <PuzzleSVG 
+        variant= "purple"
+        size= "md"
+      />
+    </main>
   )
 }

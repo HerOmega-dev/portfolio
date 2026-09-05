@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-front-3:
+  --color-*: initial;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-purple: #8B29FC;
+  --color-blue: #15F0F0;
+  --color-pink: #FC29E4;
+
 }
 
 :root {
